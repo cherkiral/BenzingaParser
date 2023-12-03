@@ -1,0 +1,131 @@
+.message {
+    color: grey;
+    font-size: medium;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: opacity 2s ease-out;
+    border: 1px solid grey;
+    padding: 10px;
+    border-radius: 5px; /* Rounded corners */
+    width: auto; /* Adjust as needed */
+    z-index: 10; /* Ensure it's above other content */
+}
+
+.message-hide {
+    opacity: 0;
+}
+
+.slider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 15px;
+    border-radius: 5px;
+    background: #ddd;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+}
+
+.slider:hover {
+    opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #282c34;
+    cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #282c34;
+    cursor: pointer;
+}
+
+.ArticleFetcher {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Distributes space between items */
+    min-height: 100vh; /* Ensures it takes at least the full viewport height */
+    height: auto;
+    padding: 20px;
+    text-align: center;
+}
+
+.control-panel {
+    /* Flex item to be centered */
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.articles-container {
+    width: 99%;
+    /* Positioned at the bottom of .ArticleFetcher */
+}
+
+.article {
+    background-color: #282c34;
+    color: white; /* Adjust text color for readability */
+    border: 1px solid grey;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    text-align: left;
+    width: 100%;
+    /* Remove animation from here */
+}
+
+/* Apply animation only to new articles */
+.article-new {
+    animation: slideDown 0.5s ease forwards;
+    border: 1px solid green;
+}
+
+/* Keyframes for slide-down animation */
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.article button {
+    margin-top: 10px;
+    padding: 5px 10px;
+    background-color: #282c34;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    /* Add any additional styling as needed */
+}
+
+.article button:hover {
+    background-color: #3a3f47; /* Slightly darker on hover */
+}
+
+.article-details {
+    margin-top: 10px;
+    background-color: #3a3f47; /* Light background for the details */
+    padding: 10px;
+    border-radius: 5px;
+    text-align: left;
+}
+
+a {
+    text-decoration: none;
+    color: inherit; /* Inherit the color from the parent element */
+}
