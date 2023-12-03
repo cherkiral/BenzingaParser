@@ -1,13 +1,14 @@
-import asyncio
 import json
-from pprint import pprint
+
 import httpx
 from bs4 import BeautifulSoup
+
 
 async def fetch_api_data(url: str):
     async with httpx.AsyncClient() as client:
         response = await client.get(url)
         return response.text
+
 
 async def parse_and_sort(url: str):
     result_list = []
@@ -20,6 +21,16 @@ async def parse_and_sort(url: str):
         result_list.append({'link': link, 'title': title})
     return result_list
 
+
+async def parse_last_article_on_page():
+    page = await fetch_api_data('https://www.benzinga.com/markets')
+    soup = BeautifulSoup(page, 'html.parser')
+    article_body = soup.find('a', class_='newsfeed-card')
+    href = article_body.get('href')
+    article_number = href.split('/')[-2]
+    return article_number
+
+
 async def parse_article_content(url: str):
     page = await fetch_api_data(url)
     soup = BeautifulSoup(page, 'html.parser')
@@ -28,7 +39,7 @@ async def parse_article_content(url: str):
 
     article_content = ""
 
-    for element in article_body.find_all('p', class_='core-block'):
+    for element in article_body.find_all(['p', 'ul', 'li'], class_='core-block'):
         if element.find('em', class_='core-block'):
             continue
         article_content += element.get_text(strip=True) + "\n"
@@ -38,9 +49,3 @@ async def parse_article_content(url: str):
     result_dict = {'title': article_title, 'content': article_content}
 
     return result_dict
-
-# result = asyncio.run(parse_article_body('https://www.benzinga.com/markets/cryptocurrency/23/12/36057232/bitcoin-set-up-for-a-wonderful-story-thanks-to-etf-and-more-says-galaxy-digital-ceo-old-hi'))
-# print(result)
-
-# result = asyncio.run(parse_and_sort('https://www.benzinga.com/api/news?channels=2&limit=100}'))
-# print(result)

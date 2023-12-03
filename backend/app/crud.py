@@ -9,7 +9,7 @@ async def create_article_item(news_item: ArticleItem):
     return new_item.inserted_id
 
 
-async def get_all_articles():
+async def get_articles():
     db = await get_database()
     news_collection = db['articles']
     news_items = news_collection.find({})
@@ -21,6 +21,13 @@ async def create_link_item(news_item: LinkItem):
     collection = db['links']
     new_item = collection.insert_one(news_item.dict())
     return new_item.inserted_id
+
+
+async def get_links(limit: int):
+    db = await get_database()
+    news_collection = db['links']
+    news_items = news_collection.find({}).limit(limit)
+    return [LinkItem(**item) for item in news_items]
 
 
 async def get_all_links():

@@ -1,5 +1,8 @@
 from fastapi import HTTPException
 from functools import wraps
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 def handle_exceptions(route_function):
@@ -8,7 +11,7 @@ def handle_exceptions(route_function):
         try:
             return await route_function(*args, **kwargs)
         except Exception as e:
-            # Add logging here if desired
+            logger.error(f"Error occurred: {e}")
             raise HTTPException(status_code=500, detail=str(e))
 
     return wrapper
